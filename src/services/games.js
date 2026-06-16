@@ -1,8 +1,9 @@
 const urlGames = `http://localhost:3001`;
 
-export async function fetchGames() {
+export async function fetchGames(search, category) {
+  const params = new URLSearchParams({search, category });
   try {
-    const response = await fetch(`${urlGames}/games`);
+    const response = await fetch(`${urlGames}/games?${params}`);
     if (!response.ok) {
       throw new Error("non è stato possibile recuperare il videogioco");
     }
