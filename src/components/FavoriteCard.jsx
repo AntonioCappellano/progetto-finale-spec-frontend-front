@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
 
-export default function GameCard({ game }) {
+export default function FavoriteCard({ game }) {
   const navigate = useNavigate();
-  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
-  const favorite = isFavorite(game.id);
+  const { removeFavorite } = useFavorites();
+
   return (
     <div className="col-4">
       <div className="card h-100 shadow-sm">
@@ -14,14 +14,16 @@ export default function GameCard({ game }) {
           style={{ cursor: "pointer" }}
         >
           <h5 className="card-title">{game.title}</h5>
-          <p className="card-text">{game.category}</p>
+          <p className="card-text">Categoria: {game.category}</p>
+          <p className="card-text">Prezzo: {game.price}$</p>
+          <p className="card-text">Rating: {game.rating}</p>
           <button
             onClick={(e) => {
               e.stopPropagation();
-              favorite ? removeFavorite(game.id) : addFavorite(game.id);
+              removeFavorite(game.id);
             }}
           >
-            <i className={favorite ? "bi bi-heart-fill text-danger" : "bi bi-heart"}></i>
+            <i className="bi bi-heart-fill text-danger"></i>
           </button>
         </div>
       </div>
