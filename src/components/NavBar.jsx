@@ -14,23 +14,13 @@ export default function NavBar() {
             >
               Home
             </NavLink>
-
-            <NavLink
-              to="/games/id"
-              className={({ isActive }) =>
-                `nav-link fw-medium transition-all ${isActive ? "text-primary border-bottom border-primary border-2 pb-1" : "text-secondary"}`
-              }
-            >
-              Videogioco
-            </NavLink>
-
             <NavLink
               to="/favorites"
               className={({ isActive }) =>
                 `nav-link fw-medium transition-all ${isActive ? "text-primary border-bottom border-primary border-2 pb-1" : "text-secondary"}`
               }
             >
-               Preferiti
+              Preferiti
             </NavLink>
           </div>
         </div>

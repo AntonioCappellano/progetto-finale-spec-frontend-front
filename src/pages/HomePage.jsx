@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import fetchGames from "../services/games";
+import { fetchGames } from "../services/games";
 import GameCard from "../components/GameCard";
 import { useNavigate } from "react-router-dom";
 
