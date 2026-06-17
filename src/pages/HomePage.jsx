@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { fetchGames } from "../services/games";
 import GameCard from "../components/GameCard";
 import { useNavigate } from "react-router-dom";
+import CompareSection from "../components/CompareSection";
 
 export default function HomePage() {
   const [games, setGames] = useState([]);
@@ -13,6 +14,7 @@ export default function HomePage() {
   const [sortField, setSortField] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [initialLoading, setInitialLoading] = useState(true);
+  const [selectedForCompare, setSelectedForCompare] = useState([]);
 
   const navigate = useNavigate();
 
@@ -67,6 +69,18 @@ export default function HomePage() {
         : b[sortField].localeCompare(a[sortField]);
     });
   };
+
+  function handleCompareSelected(id) {
+    const compareSelected = selectedForCompare.some((comp) => comp === id);
+    if (!compareSelected && selectedForCompare.length < 2) {
+      setSelectedForCompare([...selectedForCompare, id]);
+    }
+  }
+
+  function handleRemoveFromCompare(id) {
+    const removeComp = selectedForCompare.filter((s) => s !== id);
+    setSelectedForCompare(removeComp);
+  }
 
   const gamesToDisplay = sortedGame();
 
@@ -130,11 +144,36 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </div>
-      <div className="row g-4 m-2">
-        {gamesToDisplay.map((g) => (
-          <GameCard key={g.id} game={g} />
-        ))}
+        <div className="row g-4 m-2">
+          {gamesToDisplay.map((g) => (
+            <GameCard
+              key={g.id}
+              game={g}
+              selectedCompare={selectedForCompare}
+              handleCompare={() => handleCompareSelected(g.id)}
+            />
+          ))}
+        </div>
+        <div className="mt-5 p-4 bg-light rounded-4 border border-2 border-dashed border-primary-subtle position-relative overflow-hidden">
+          <div className="position-absolute top-0 start-0 w-100 h-100 bg-white opacity-25 pointer-events-none"></div>
+
+          <div className="position-relative z-1">
+            <div className="text-center mb-4">
+              <h3 className="fw-bold text-dark m-0">Confronta i giochi</h3>
+              <p className="text-muted small">
+                Seleziona due giochi dalle schede sopra per confrontarli
+              </p>
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-lg-10">
+                <CompareSection
+                  selectedIds={selectedForCompare}
+                  onRemove={handleRemoveFromCompare}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -12,10 +12,10 @@ export default function Layout() {
           <NavBar />
           <div className="container-fluid p-0">
             <div className="row g-0">
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <SideBar />
               </div>
-              <main className="col-10">
+              <main className="col-10 p-0">
                 <Outlet />
               </main>
             </div>

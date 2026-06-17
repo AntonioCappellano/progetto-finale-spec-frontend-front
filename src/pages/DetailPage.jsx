@@ -30,7 +30,9 @@ export default function DetailPage() {
   return (
     <>
       <div className="container mt-5">
-        <GameDetailCard game={game} />
+        <div style={{ maxWidth: "700px", margin: "0 auto" }}>
+          <GameDetailCard game={game} />
+        </div>
       </div>
     </>
   );

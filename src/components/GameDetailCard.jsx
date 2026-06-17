@@ -1,9 +1,6 @@
 export default function GameDetailCard({ game }) {
   return (
-    <div
-      className="card shadow-lg border-0 mx-auto"
-      style={{ maxWidth: "700px" }}
-    >
+    <div className="card shadow-lg border-0">
       {game.img && (
         <img
           src={game.img}
