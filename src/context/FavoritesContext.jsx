@@ -1,9 +1,21 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
 const FavoritesContext = createContext();
 
 function FavoritesProvider({ children }) {
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem("favorites");
+    if (saved) {
+      return JSON.parse(saved);
+    } else {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
   function addFavorite(id) {
     const isFavorite = favorites.some((favId) => favId === id);
     if (!isFavorite) {
