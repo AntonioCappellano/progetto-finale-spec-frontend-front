@@ -17,7 +17,7 @@ export default function HomePage() {
   const [selectedForCompare, setSelectedForCompare] = useState([]);
 
   const navigate = useNavigate();
- 
+
   useEffect(() => {
     const timerId = setTimeout(() => {
       async function loadGames() {
@@ -149,16 +149,27 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        <div className="row g-4 m-2">
-          {gamesToDisplay.map((g) => (
-            <GameCard
-              key={g.id}
-              game={g}
-              selectedCompare={selectedForCompare}
-              handleCompare={() => handleCompareSelected(g.id)}
-            />
-          ))}
-        </div>
+        {gamesToDisplay.length === 0 ? (
+          <div className="d-flex flex-column align-items-center justify-content-center text-center py-5">
+            <i className="bi bi-emoji-frown" style={{ fontSize: "3rem" }}></i>
+            <p className="mt-3">
+              <strong>Nessun gioco trovato</strong>
+            </p>
+            <p className="text-muted">modifica la ricerca o il filtro selezionato </p>
+          </div>
+        ) : (
+          <div className="row g-4 m-2">
+            {gamesToDisplay.map((g) => (
+              <GameCard
+                key={g.id}
+                game={g}
+                selectedCompare={selectedForCompare}
+                handleCompare={() => handleCompareSelected(g.id)}
+              />
+            ))}
+          </div>
+        )}
+
         <div className="mt-5 p-4 bg-light rounded-4 border border-2 border-dashed border-primary-subtle position-relative overflow-hidden">
           <div className="position-absolute top-0 start-0 w-100 h-100 bg-white opacity-25 pointer-events-none"></div>
 
