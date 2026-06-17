@@ -17,6 +17,29 @@ export default function HomePage() {
   const [selectedForCompare, setSelectedForCompare] = useState([]);
 
   const navigate = useNavigate();
+ 
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      async function loadGames() {
+        try {
+          setLoading(true);
+          const data = await fetchGames(search, category);
+          setGames(data);
+          setInitialLoading(false);
+          setLoading(false);
+        } catch (error) {
+          setInitialLoading(false);
+          setLoading(false);
+          setError(error.message);
+          console.error(error);
+        }
+      }
+      loadGames();
+    }, 500);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [search, category]);
 
   useEffect(() => {
     async function loadCategories() {
@@ -32,24 +55,6 @@ export default function HomePage() {
     }
     loadCategories();
   }, []);
-
-  useEffect(() => {
-    async function loadGames() {
-      try {
-        setLoading(true);
-        const data = await fetchGames(search, category);
-        setGames(data);
-        setInitialLoading(false);
-        setLoading(false);
-      } catch (error) {
-        setInitialLoading(false);
-        setLoading(false);
-        setError(error.message);
-        console.error(error);
-      }
-    }
-    loadGames();
-  }, [search, category]);
 
   function handleSort(field) {
     if (sortField === field) {
